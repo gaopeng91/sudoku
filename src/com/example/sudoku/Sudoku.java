@@ -17,29 +17,25 @@ public class Sudoku extends Activity implements OnClickListener {
 	private static final String TAG = "Sudoku";
 
 	/** Called when the activity is first created. */
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		Intent i = new Intent(this, Graphics.class);
-		startActivity(i);
+
+		View continueButton = findViewById(R.id.continue_button);
+		continueButton.setOnClickListener(this);
+
+		View newGameButton = findViewById(R.id.new_game_button);
+		newGameButton.setOnClickListener(this);
+
+		View aboutButton = findViewById(R.id.about_button);
+		aboutButton.setOnClickListener(this);
+
+		View exitButton = findViewById(R.id.exit_button);
+		exitButton.setOnClickListener(this);
 	}
 
-	/*
-	 * @Override public void onCreate(Bundle savedInstanceState) {
-	 * super.onCreate(savedInstanceState); setContentView(R.layout.main);
-	 * 
-	 * View continueButton = findViewById(R.id.continue_button);
-	 * continueButton.setOnClickListener(this);
-	 * 
-	 * View newGameButton = findViewById(R.id.new_game_button);
-	 * newGameButton.setOnClickListener(this);
-	 * 
-	 * View aboutButton = findViewById(R.id.about_button);
-	 * aboutButton.setOnClickListener(this);
-	 * 
-	 * View exitButton = findViewById(R.id.exit_button);
-	 * exitButton.setOnClickListener(this); }
-	 */
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -51,16 +47,9 @@ public class Sudoku extends Activity implements OnClickListener {
 			openNewGameDialog();
 			break;
 		case R.id.exit_button:
-			if (confirmExit())
-				finish();
+			finish();
 			break;
 		}
-	}
-
-	private boolean confirmExit() {
-		Intent intent = new Intent(this, ExitConfirm.class);
-		startActivity(intent);
-		return true;
 	}
 
 	private void openNewGameDialog() {
