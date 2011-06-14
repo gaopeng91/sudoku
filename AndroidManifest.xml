@@ -21,6 +21,6 @@
 
 		<activity android:name=".ExitConfirm" android:label="@string/exit_title"></activity>
 		
-		<activity android:name=".Graphics" android:label="@string/exit_title"></activity>
+		<activity android:name=".Game" android:label="@string/game_title"></activity>
 	</application>
 </manifest>

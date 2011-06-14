@@ -33,4 +33,7 @@
 	<string name="exit_summary">Confirm Exit?</string>
 	<string name="yes">yes</string>
 	<string name="no">no</string>
+	<string name="game_title">Game</string>
+	<string name="no_moves_label">No moves</string>
+	<string name="keypad_title">Keypad</string>
 </resources>
