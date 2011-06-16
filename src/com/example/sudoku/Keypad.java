@@ -2,7 +2,6 @@ package com.example.sudoku;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 
@@ -74,4 +73,11 @@ public class Keypad extends Dialog {
 		keys[8] = findViewById(R.id.keypad_9);
 	}
 
+	private boolean isValid(int tile) {
+		for(int i = 0; i < used.length; i++) {
+			if(tile == used[i])
+				return false;
+		}
+		return true;
+	}
 }

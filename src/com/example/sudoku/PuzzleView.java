@@ -7,6 +7,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
+import android.text.method.MovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -106,16 +107,19 @@ public class PuzzleView extends View {
 
 		// Draw the hint
 		Paint hint = new Paint();
-		Rect rect = new Rect();
+		Rect r = new Rect();
 		int[] c = { getResources().getColor(R.color.puzzle_hint_0),
 				getResources().getColor(R.color.puzzle_hint_1),
 				getResources().getColor(R.color.puzzle_hint_2) };
+		int movesLeft;
 		for (int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
-				int movesLeft = 9 - game.getUsedTiles(i, j).length;
+				movesLeft = 9 - game.getUsedTiles(i, j).length;
 				if(movesLeft < c.length) {
-					getRect(i, j, rect);
-					canvas.drawRect(rect, hint);
+					Log.d(TAG, i + ":" + j + "  movesleft:" + movesLeft);
+					getRect(i, j, r);
+					hint.setColor(c[movesLeft]);
+					canvas.drawRect(r, hint);
 				}
 			}
 		}
@@ -186,8 +190,7 @@ public class PuzzleView extends View {
 			invalidate();
 		} else {
 			Log.d(TAG, "setSelectedTile: invalid: " + tile);
-			startAnimation(AnimationUtils.loadAnimation(game,
-			R.anim.shake));
+			startAnimation(AnimationUtils.loadAnimation(game, R.anim.shake));
 		}
 	}
 }
