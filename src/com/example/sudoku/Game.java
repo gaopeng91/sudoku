@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class Game extends Activity {
 
-	private static final String TAG = "Sudoku";
+	private static final String TAG = "Game";
 	public static final String KEY_DIFFICULTY = "org.example.sudoku.difficulty";
 	public static final int DIFFICULTY_EASY = 0;
 	public static final int DIFFICULTY_MEDIUM = 1;
@@ -27,6 +27,15 @@ public class Game extends Activity {
 	private final String hardPuzzle = "009000000080605020501078000"
 			+ "000000700706040102004000000" + "000720903090301080000000600";
 
+	private static final String PREF_PUZZLE = "puzzle";
+	protected static final int DIFFICULTY_CONTINUE = -1;
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		Log.d(TAG, "onRestoreInstanceState");
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,12 +47,16 @@ public class Game extends Activity {
 		puzzleView = new PuzzleView(this);
 		setContentView(puzzleView);
 		puzzleView.requestFocus();
+
 	}
 
 	private int[] getPuzzle(int diff) {
 		String puz;
 		switch (diff) {
-
+		case DIFFICULTY_CONTINUE:
+			puz = getPreferences(MODE_PRIVATE).getString(PREF_PUZZLE,
+					easyPuzzle);
+			break;
 		case DIFFICULTY_MEDIUM:
 			puz = mediumPuzzle;
 			break;
@@ -179,4 +192,21 @@ public class Game extends Activity {
 			return String.valueOf(tile);
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (Prefs.getMusic(this))
+			Music.play(this, R.raw.fresh_power);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (Prefs.getMusic(this))
+			Music.stop(this);
+
+		// save current puzzle
+		getPreferences(MODE_PRIVATE).edit()
+				.putString(PREF_PUZZLE, toPuzzleString(puzzle)).commit();
+	}
 }
